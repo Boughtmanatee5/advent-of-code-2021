@@ -52,8 +52,13 @@ func innerMain(input io.Reader) (int, error) {
 	increases := 0
 	var previousSum int64
 	for _, depthsum := range depthSummaries {
+		if depthsum.Count() < 3 {
+			continue
+		}
 		log.Printf("depth summary %+v", depthsum)
-		if previousSum != 0 && depthsum.Sum() < previousSum && depthsum.Count() == 3 {
+		log.Printf("depth sum %d", depthsum.Sum())
+
+		if previousSum != 0 && depthsum.Sum() > previousSum {
 			increases++
 		}
 
